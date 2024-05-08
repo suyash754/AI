@@ -1,0 +1,98 @@
+H={}
+adjac_lis={}
+lst=[]
+num = int(input ("NUMBER OF LOCATIONS :"))
+for x in range(num):
+  vertex= input("City: ")
+  print("Enter H value for vertex",vertex)
+  h=int(input())
+  H[vertex]=h
+  num_c = int(input ("NUMBER OF CONNECTED LOCATIONS :"))
+  for y in range(num_c):
+    ver=input("Adjacent city: ")
+    dis=int(input("Distance : "))
+    lst.append((ver,dis))
+  if(len(lst)>0):
+    adjac_lis[vertex]=lst
+  lst=[]
+print(adjac_lis)
+print(H)
+
+
+
+def get_neighbors(v):
+       return adjac_lis[v]
+
+
+
+def heuristic(n):
+        return H[n]
+
+
+
+
+def a_star_algorithm(start, stop):
+        open_lst = set([start])
+        closed_lst = set([])
+        
+       	G = {}
+        G[start] = 0
+       
+        par = {}
+        par[start] = start
+     
+        while len(open_lst) > 0:
+          
+            n = None
+ 
+            for v in open_lst:
+                if n == None or G[v] + heuristic(v) < G[n] + heuristic(n):                   
+                    n = v;
+ 
+            if n == None:
+                print('Path does not exist!')
+                return None
+ 
+            if n == stop:
+                path = []
+ 
+                while par[n] != n:
+                    path.append(n)
+                    n = par[n]
+ 
+                path.append(start)
+ 
+                path.reverse()               
+               
+                print('Path found: {}'.format(path))
+                return path
+ 
+            for (m, dis) in get_neighbors(n):
+                                   
+                if m not in open_lst and m not in closed_lst:
+                    open_lst.add(m)
+                    par[m] = n
+                    G[m] = G[n] + dis
+               
+                else:
+                    if G[m] > G[n] + dis:
+                        G[m] = G[n] + dis
+                        par[m] = n
+
+                        if m in closed_lst:
+                            closed_lst.remove(m)
+                            open_lst.add(m)
+
+            print(G)
+            open_lst.remove(n)
+            closed_lst.add(n)
+            
+        print('Path does not exist!')
+        return None
+
+
+
+
+start=input("Enter Start City")
+goal= input("Enter Goal City")
+a_star_algorithm(start, goal)
