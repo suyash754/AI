@@ -1,0 +1,171 @@
+def clash(brd):
+    board=[]
+    for i in range(n):
+        board.append((brd[i],i))
+    
+    cnt=0
+    for i in range(n-1):
+        var=board[i]
+        for j in range(i+1,n):
+            var1=board[j]
+            if(abs(var[0]-var1[0])==abs(var[1]-var1[1])):
+                cnt+=1
+            
+            if(var[0]==var1[0]):
+                cnt+=1
+        
+    return cnt
+
+
+def succ_find(pos):
+    positions.clear()
+    lst=[]
+    
+    for i in range(n):
+        for j in range(n):
+            if(pos[i]!=j):
+                lst=pos.copy()
+                lst[i]=j
+                lst=list(lst)
+                positions.append(lst)
+    
+    for p in positions:
+        print(p, clash(p))
+    print("\n")
+    return positions
+
+
+
+
+n = int(input("Enter no. of queens: "))
+pos_init=[]
+for i in range(n):
+    print("enter row of ", i, "th queen")
+    pos_init.append(int(input()))
+    
+h=clash(pos_init)
+print(h)
+
+old_h=99
+pos=pos_init.copy()
+
+while(old_h>h):
+    positions=[]
+    
+    positions=succ_find(pos)
+    min=99
+    m_lst=[]
+    
+    for lst in positions:
+        m_val = clash(lst)
+        if(m_val<min):
+            min=m_val
+            m_lst=lst.copy()
+    
+    old_h=h
+    h=min
+    pos=m_lst.copy()
+    print("\t\t", pos,h)
+    print("\n")
+    if(h==0):
+        break
+
+if(h==0):
+    print("Solution found")
+    print("h=",h)
+    print(pos)
+else:
+    print("No solution found")
+
+
+
+import random
+n = int(input("Enter no of queens"))
+pos_init=[]
+for i in range(n):
+    print("Enter row no of", i , "th Queen: ")
+    pos_init.append(int(input()))
+    
+h=clash(pos_init)
+print(h)
+pos=pos_init.copy()
+
+cnt=0
+while(1):
+    cnt+=1
+    positions=[]
+    positions=succ_find(pos)
+    pos=[]
+    
+    pos=positions[random.randint(0, len(positions)-1)]
+    print(pos)
+    h=clash(pos)
+    
+    print("\t\t", pos,h)
+    print("\n")
+    if(h==0):
+        break
+
+if(h==0):
+    print("Solution found after", cnt, "no. of steps")
+    print("h=",h)
+    print(pos)
+else:
+    print("No solution found")
+    
+
+
+
+#random restart
+import random
+n= int(input("Enter no. of queen: "))
+pos_init=[]
+for i in range(n):
+    print("Enter row no. of", i ,"th queen: ")
+    pos_init.append(int(input()))
+
+h=clash(pos_init)
+print(h)
+
+old_h=99
+pos=pos_init.copy()
+
+while(1):
+    old_h=99
+    h=clash(pos_init)
+    
+    while(old_h>h):
+        positions=[]
+        
+        positions=succ_find(pos)
+        min=99
+        m_lst=[]
+        
+        for lst in positions:
+            m_val=clash(lst)
+            if(m_val<min):
+                min=m_val
+                m_lst=lst.copy()
+        
+        old_h=h
+        h=min
+        pos=m_lst.copy()
+        print("\t\t", pos,h)
+        print("\n")
+        if(h==0):
+            break
+    
+    if(h==0):
+        print("Solution Found")
+        print("h=",h)
+        print(pos)
+        break
+    else:
+        print("\n No Solution to Problem")
+        pos_init=[]
+        pos_init.append(random.randint(0,3))
+        pos_init.append(random.randint(0,3))
+        pos_init.append(random.randint(0,3))
+        pos_init.append(random.randint(0,3))
+        print("Random Restart with: ", pos_init)
+
