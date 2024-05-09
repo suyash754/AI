@@ -1,0 +1,110 @@
+pip install nltk
+
+import nltk
+nltk.download('punkt')
+from nltk.tokenize import sent_tokenize,word_tokenize
+
+txt=''' '''
+
+sent_tokenize(txt)
+
+txt=" "
+word_tokenize(txt)
+
+from nltk.tokenize import TreebankWordTokenizer
+txt=" "
+tokenizer = TreebankWordTokenizer()
+tokenizer.tokenize(txt)
+
+from nltk.tokenize import WordPunctTokenizer
+txt=" "
+tokenizer=WordPunctTokenizer()
+tokenizer.tokenize(txt)
+
+from nltk.tokenize import RegexpTokenizer
+tokenizer = RegexpTokenizer("[\w']+")
+txt=" "
+tokenizer.tokenize(txt)
+
+import nltk
+nltk.download('stopwords')
+
+import nltk
+from nltk.corpus import stopwords
+print(stopwords.words('english'))
+
+stopwords = nltk.corpus.stopwords.words('english')
+stopwords.append('this')
+
+stopwords = nltk.corpus.stopwords.words('english')
+newStopWords = ['there','therefore']
+stopwords.extend(newStopWords)
+
+print(stopwords)
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+
+sentence=" "
+
+tokens=word_tokenize(sentence)
+
+stop_words = set(stopwords.words('english'))
+
+filtered_words = [word for word in tokens if word.lower() not in stop_words]
+
+print("Original Sentence:")
+print(sentence)
+print("\nWords excluding stop words:")
+print(filtered_words)
+
+from  sklearn.feature_extraction.text import TfidfVectorizer
+
+d0=' '
+d1=' '
+d2=' '
+
+import pandas as pd
+string = [d0,d1,d2]
+tfidf = TfidfVectorizer(ngram_range = (1,1))
+result = tfidf.fit_transform(string)
+feature_names=tfidf.get_feature_names_out()
+dense=result.todense()
+dens_lst=dense.tolist()
+df=pd.DataFrame(dens_lst,columns=feature_names)
+
+print(df)
+
+df2 = pd.DataFrame(result.toarray().transpose(),
+ index=tfidf.get_feature_names_out())
+
+print(df2)
+
+txt = ''' '''
+
+import nltk
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+from nltk.corpus import stopwords
+stopwords = nltk.corpus.stopwords.words('english')
+
+from nltk.tokenize import WhitespaceTokenizer
+word_lst=WhitespaceTokenizer().tokenize(txt)
+print(word_lst)
+
+word_list=[]
+for word in word_lst:
+ if word not in stopwords:
+  word_list.append(word)
+
+pos_dict={}
+pos_dict=nltk.pos_tag(word_list)
+
+print(pos_dict)
+
+for (wrd,pos) in pos_dict:
+ if(pos in ['NN','VBD','NNP','VBZ','VBN']):
+  print(wrd,pos)
